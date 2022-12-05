@@ -10,20 +10,13 @@
     <Filter Include="Manager">
       <UniqueIdentifier>{33d75952-d282-4236-ba81-0e468e5ab329}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{d4da671f-31a4-4040-9638-db00633f6b65}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MarioAndFighterApp.cpp" />
-    <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Bitmap.cpp">
-      <Filter>GameObj</Filter>
-    </ClCompile>
     <ClCompile Include="GameObject.cpp">
-      <Filter>GameObj</Filter>
-    </ClCompile>
-    <ClCompile Include="Sprite.cpp">
-      <Filter>GameObj</Filter>
-    </ClCompile>
-    <ClCompile Include="Text.cpp">
       <Filter>GameObj</Filter>
     </ClCompile>
     <ClCompile Include="D2D1Core.cpp">
@@ -38,21 +31,32 @@
     <ClCompile Include="GameWnd.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Bitmap.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Text.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>GameObj</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="FileUtils.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="BitmapEntity.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MarioAndFighterApp.h" />
-    <ClInclude Include="pch.h" />
-    <ClInclude Include="Type.h" />
-    <ClInclude Include="Bitmap.h">
-      <Filter>GameObj</Filter>
-    </ClInclude>
     <ClInclude Include="GameObject.h">
-      <Filter>GameObj</Filter>
-    </ClInclude>
-    <ClInclude Include="Sprite.h">
-      <Filter>GameObj</Filter>
-    </ClInclude>
-    <ClInclude Include="Text.h">
       <Filter>GameObj</Filter>
     </ClInclude>
     <ClInclude Include="D2D1Core.h">
@@ -66,6 +70,33 @@
     </ClInclude>
     <ClInclude Include="GameWnd.h">
       <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Bitmap.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Text.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>GameObj</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Type.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="FileUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="BitmapEntity.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -24,6 +24,8 @@ public:
 	void  RenderProcess(ID2D1Bitmap* _bitmap);
 public:
 	ID2D1BitmapRenderTarget* GetBRT() { return m_brt; }
+	ID2D1HwndRenderTarget* GetRT() { return m_rt; }
+	ID2D1HwndRenderTarget** GetRRT() { return &m_rt; }
 	void	SetBrush(D2D1::ColorF _color);
 	void	SetBrush(D2D1::ColorF _color, ID2D1SolidColorBrush** _brsuh);
 };
