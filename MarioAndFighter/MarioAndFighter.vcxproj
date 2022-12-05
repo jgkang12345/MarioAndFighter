@@ -131,17 +131,20 @@
     <ClInclude Include="D2D1Core.h" />
     <ClInclude Include="FPSManager.h" />
     <ClInclude Include="GameManager.h" />
+    <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameWnd.h" />
     <ClInclude Include="MarioAndFighterApp.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Text.h" />
+    <ClInclude Include="Type.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Bitmap.cpp" />
     <ClCompile Include="D2D1Core.cpp" />
     <ClCompile Include="FPSManager.cpp" />
     <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameWnd.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MarioAndFighterApp.cpp" />
