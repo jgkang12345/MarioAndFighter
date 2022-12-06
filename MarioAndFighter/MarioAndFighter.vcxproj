@@ -129,16 +129,19 @@
   <ItemGroup>
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Bitmap.h" />
-    <ClInclude Include="BitmapEntity.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="D2D1Core.h" />
     <ClInclude Include="FileUtils.h" />
     <ClInclude Include="FPSManager.h" />
-    <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameWnd.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MarioAndFighterApp.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="ResourceManger.h" />
+    <ClInclude Include="Sceen.h" />
+    <ClInclude Include="SceenManager.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Text.h" />
     <ClInclude Include="Type.h" />
@@ -146,16 +149,19 @@
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Bitmap.cpp" />
-    <ClCompile Include="BitmapEntity.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="D2D1Core.cpp" />
     <ClCompile Include="FileUtils.cpp" />
     <ClCompile Include="FPSManager.cpp" />
-    <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameWnd.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MarioAndFighterApp.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="ResourceManger.cpp" />
+    <ClCompile Include="Sceen.cpp" />
+    <ClCompile Include="SceenManager.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Text.cpp" />
   </ItemGroup>

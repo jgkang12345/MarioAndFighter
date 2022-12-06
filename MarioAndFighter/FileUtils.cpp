@@ -23,6 +23,53 @@ void FileUtils::GetFileExp(IN TCHAR* _fileName, OUT TCHAR* _ret)
 	_ret[index] = '\0';
 }
 
+void FileUtils::GetFileExp(IN const char* _fileName, OUT char* _ret)
+{
+	std::stack<char> s;
+	int pathLen = strlen(_fileName);
+	for (int i = pathLen - 1; i >= 0; i--)
+	{
+		if (_fileName[i] == _T('.'))
+			break;
+		s.push(_fileName[i]);
+	}
+
+	int index = 0;
+
+	while (s.empty() == false)
+	{
+		TCHAR t = s.top();
+		s.pop();
+		_ret[index] = t;
+		index++;
+	}
+	_ret[index] = '\0';
+}
+
+void FileUtils::GetFileName(IN const char* _path, OUT char* _fileName)
+{
+
+	std::stack<char> s;
+	int pathLen = strlen(_path);
+	for (int i = pathLen - 1; i >= 0; i--)
+	{
+		if (_path[i] == _T('\\'))
+			break;
+		s.push(_path[i]);
+	}
+
+	int index = 0;
+
+	while (s.empty() == false)
+	{
+		char t = s.top();
+		s.pop();
+		_fileName[index] = t;
+		index++;
+	}
+	_fileName[index] = '\0';
+}
+
 FileUtils* FileUtils::GetInstance()
 {
 	if (m_instance == nullptr)

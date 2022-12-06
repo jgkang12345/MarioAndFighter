@@ -2,6 +2,7 @@
 #include <Windows.h>
 class GameWnd;
 class GameManager;
+class SceenManager;
 class MarioAndFighterApp
 {
 private:
@@ -12,7 +13,8 @@ private:
 	DWORD		m_height;
 	HWND		m_hwnd;
 	GameWnd*	m_wnd;
-	GameManager* m_gameManger;
+	// GameManager* m_gameManger;
+	SceenManager* m_sceenManager;
 public:
 	MarioAndFighterApp() = default;
 	~MarioAndFighterApp() {};

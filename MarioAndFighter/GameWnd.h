@@ -1,5 +1,6 @@
 #pragma once
 #include <Windows.h>
+#include <d2d1.h>
 class GameWnd
 {
 private:
@@ -26,6 +27,7 @@ public:
 	ID2D1BitmapRenderTarget* GetBRT() { return m_brt; }
 	ID2D1HwndRenderTarget* GetRT() { return m_rt; }
 	ID2D1HwndRenderTarget** GetRRT() { return &m_rt; }
+	HWND	GetHwnd() { return m_hwnd; }
 	void	SetBrush(D2D1::ColorF _color);
 	void	SetBrush(D2D1::ColorF _color, ID2D1SolidColorBrush** _brsuh);
 };

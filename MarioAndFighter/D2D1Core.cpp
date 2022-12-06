@@ -2,6 +2,10 @@
 #include "Bitmap.h"
 #include "D2D1Core.h"
 #include "Sprite.h"
+
+#pragma comment(lib, "windowscodecs.lib")
+#pragma comment(lib, "d2d1.lib")
+#pragma comment(lib, "dwrite.lib")
 D2D1Core* D2D1Core::m_instance = nullptr;
 void D2D1Core::Init()
 {

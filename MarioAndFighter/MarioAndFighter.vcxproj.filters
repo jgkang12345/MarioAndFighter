@@ -25,9 +25,6 @@
     <ClCompile Include="FPSManager.cpp">
       <Filter>Manager</Filter>
     </ClCompile>
-    <ClCompile Include="GameManager.cpp">
-      <Filter>Manager</Filter>
-    </ClCompile>
     <ClCompile Include="GameWnd.cpp">
       <Filter>Core</Filter>
     </ClCompile>
@@ -50,8 +47,18 @@
     <ClCompile Include="FileUtils.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="BitmapEntity.cpp">
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Player.cpp">
+      <Filter>GameObj</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManger.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Sceen.cpp">
       <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="SceenManager.cpp">
+      <Filter>Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -63,9 +70,6 @@
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="FPSManager.h">
-      <Filter>Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="GameManager.h">
       <Filter>Manager</Filter>
     </ClInclude>
     <ClInclude Include="GameWnd.h">
@@ -95,8 +99,18 @@
     <ClInclude Include="FileUtils.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="BitmapEntity.h">
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="Player.h">
+      <Filter>GameObj</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManger.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Sceen.h">
       <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="SceenManager.h">
+      <Filter>Manager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

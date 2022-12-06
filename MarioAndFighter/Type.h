@@ -25,7 +25,7 @@ enum Dir : int
 
 struct MapDataBinaryFile
 {
-	char imgFileName[256];
+	char imgFileName[256]; // path
 	char fileName[256];
 	int xSize;
 	int ySize;
@@ -34,7 +34,7 @@ struct MapDataBinaryFile
 
 struct ObjDataBinaryFile
 {
-	char fileName[256];
+	char fileName[256]; // path
 	int  xPos;
 	int  yPos;
 	int  width;
@@ -55,3 +55,30 @@ struct SpriteBinaryFileData
 	D2D1_RECT_F		rect;
 	D2D1_POINT_2F	pivotPos;
 };
+
+enum EVENT_TYPE : int
+{
+	EMPTYType = 0,
+	WALLType = 1,
+	PlayerType = 2,
+	NefendesType = 3,
+	GhostType = 4,
+	KumaType = 5
+};
+
+
+enum RESOURCE_TYPE : int
+{
+	SPRITE = 0,
+	ANIMATION = 1,
+	EVENT = 2,
+	MAP = 3,
+	GAME_OBJECT = 4
+};
+
+#define magnification 2.0
+#define tileWidth 16
+#define cameraW	100
+#define cameraH 100
+#define boundW 50
+#define boundH 50
