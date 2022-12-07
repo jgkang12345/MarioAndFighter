@@ -43,5 +43,16 @@ Map::~Map()
 void Map::Update()
 {
 	if (m_player)
-		m_player->Update();
+		m_player->Update(this);
+}
+
+EVENT_TYPE Map::GetTileType(const Pos& pos)
+{
+	const int x = pos.x / tileWidth;
+	const int y = pos.y / tileWidth;
+	
+	if (y < 0 || x < 0 || x >= m_XSize || y >= m_YSize || pos.x < 0 || pos.y < 0)
+		return EVENT_TYPE::WALLType;
+
+	return (EVENT_TYPE)m_mapData[y][x];
 }

@@ -17,6 +17,9 @@ public:
 	Dir GetDir() { return m_dir; }
 	char* GetFilePath() { return m_filePath; }
 	ObjectType GetObjectType() { return m_objType; }
+	int GetHPower() { return m_hPower; }
+	int GetVPower() { return m_vPower; }
+
 	void SetFilePath(const char* _path) { strcpy_s(m_filePath,_path); }
 	void SetPos(const Pos& _pos) { m_pos = _pos; }
 	void SetDir(Dir _dir) { m_dir = _dir; }

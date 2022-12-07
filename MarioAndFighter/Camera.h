@@ -11,5 +11,8 @@ public:
 public:
 	D2D1_RECT_F GetCameraRect() { return m_cameraRect; }
 	D2D1_RECT_F GetBoundRect() { return m_boundRect; }
+
+	void SetCameraRect(const D2D1_RECT_F& _rect) { m_cameraRect = _rect; }
+	void SetBoundRect(const D2D1_RECT_F& _rect) { m_boundRect = _rect; }
 };
 

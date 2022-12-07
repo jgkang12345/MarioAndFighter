@@ -7,7 +7,7 @@ void MarioAndFighterApp::Init(HINSTANCE _hInstance, const TCHAR* _title, const T
 {
 	D2D1Core::GetInstance()->Init();
 	m_wnd = new GameWnd(_hInstance, _title, _className, _width, _height, _ncmdShow);
-	m_sceenManager = new SceenManager(m_wnd);
+	SceenManager::GetInstance()->Init(m_wnd);
 }
 
 int MarioAndFighterApp::Dispatch()
@@ -24,10 +24,10 @@ int MarioAndFighterApp::Dispatch()
 			DispatchMessage(&msg);
 		}
 
-		if (g_fpsManger.Cal() && m_sceenManager)
+		if (g_fpsManger.Cal() && SceenManager::GetInstance())
 		{
-			m_sceenManager->Update(m_wnd);
-			m_sceenManager->Render(m_wnd);
+			SceenManager::GetInstance()->Update(m_wnd);
+			SceenManager::GetInstance()->Render(m_wnd);
 		}
 		Sleep(1);
 	}

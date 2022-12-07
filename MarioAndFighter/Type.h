@@ -80,5 +80,8 @@ enum RESOURCE_TYPE : int
 #define tileWidth 16
 #define cameraW	100
 #define cameraH 100
-#define boundW 50
-#define boundH 50
+#define boundW 30
+#define boundH 30
+
+#define powerX 2
+#define powerY 2

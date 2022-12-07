@@ -1,4 +1,6 @@
 #pragma once
+#include <Windows.h>
+struct Pos;
 class GameWnd;
 class Sceen
 {
@@ -12,6 +14,10 @@ public:
 	void	Update(GameWnd* _wnd);
 	void	Render(GameWnd* _wnd);
 	void	Init(const char* _mapPath, GameWnd* _wnd);
+	void	KeyDownBind(WPARAM _param);
 	void	Clean();
+	void	KeyUpBind(WPARAM _wparam);
+	void    SettingCamera(const Pos& _pos);
+	bool	IsCameraMove(const Pos& _pos);
 };
 

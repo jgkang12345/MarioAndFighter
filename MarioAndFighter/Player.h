@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+#include <Windows.h>
 class Sprite;
 class Player : public GameObject
 {
@@ -10,7 +11,9 @@ public:
 	~Player();
 public:
 	void SetSprite(Sprite* _sprite) { m_sprite = _sprite; };
-	void Update();
+	void Update(class Map* _map);
 	Sprite* GetSprite() { return m_sprite; }
+	void KeyUpBind(WPARAM _wparam);
+	void KeyDownBind(WPARAM _param);
 };
 

@@ -12,5 +12,6 @@ public:
 
 	D2D1_RECT_F		GetRect() { return m_rect; }
 	D2D1_POINT_2F	GetPivot() { return m_pivotPos; }
+	void			SetPivot(const D2D1_POINT_2F& _pivot) { m_pivotPos = _pivot; }
 };
 

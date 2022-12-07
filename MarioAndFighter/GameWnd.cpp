@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "GameWnd.h"
 #include "Text.h"
+#include "SceenManager.h"
 GameWnd::GameWnd(HINSTANCE _hInstance, const TCHAR* _title, const TCHAR* _className, DWORD _width, DWORD _height, int _ncmdShow)
 {
 	m_width = _width;
@@ -85,9 +86,11 @@ LRESULT GameWnd::Dispatch(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 
 	case WM_KEYUP:
+		SceenManager::GetInstance()->KeyUpBind(wParam);
 		break;
 
 	case WM_KEYDOWN:
+			SceenManager::GetInstance()->KeyDownBind(wParam);
 		break;
 
 	case WM_TIMER:

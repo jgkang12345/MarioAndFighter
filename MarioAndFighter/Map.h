@@ -18,5 +18,6 @@ public:
 	char* GetFileName() { return m_imgFilePath; }
 	Player* GetPlayer() { return m_player; }
 	void	Update();
+	EVENT_TYPE	GetTileType(const Pos& pos);
 };
 
