@@ -34,7 +34,7 @@ GameWnd::GameWnd(HINSTANCE _hInstance, const TCHAR* _title, const TCHAR* _classN
 		_className,
 		_title,
 		WS_OVERLAPPEDWINDOW,
-		300, 300,
+		0, 0,
 		_width, _height,
 		NULL,
 		NULL,

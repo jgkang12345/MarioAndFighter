@@ -4,15 +4,12 @@ class Camera
 {
 private:
 	D2D1_RECT_F m_cameraRect;
-	D2D1_RECT_F	m_boundRect;
 public:
-	Camera(const D2D1_RECT_F& _cameraRect, const D2D1_RECT_F& _boundRect);
+	Camera(const int& _x, const int& _y, class Map* _map);
 	~Camera();
 public:
 	D2D1_RECT_F GetCameraRect() { return m_cameraRect; }
-	D2D1_RECT_F GetBoundRect() { return m_boundRect; }
-
 	void SetCameraRect(const D2D1_RECT_F& _rect) { m_cameraRect = _rect; }
-	void SetBoundRect(const D2D1_RECT_F& _rect) { m_boundRect = _rect; }
+	bool IsCrash(class  Player* _player, class Map* _map);
+	void Update(class Player* _player, class Map* _map);
 };
-

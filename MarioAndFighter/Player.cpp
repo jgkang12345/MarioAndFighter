@@ -2,6 +2,11 @@
 #include "Sprite.h"
 #include "Map.h"
 #include "Type.h"
+#include "GameWnd.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include "ResourceManger.h"
+#include "Bitmap.h"
 void Player::Update(Map* _map)
 {
 
@@ -38,18 +43,35 @@ void Player::Update(Map* _map)
 		m_pos = nextPos;
 		break;
 	case WALLType:
+		m_vPower = 0;
+		m_hPower = 0;
 		break;
 	case PlayerType:
 		m_pos = nextPos;
 		break;
 	case NefendesType:
+		m_vPower = 0;
+		m_hPower = 0;
 		break;
 	case GhostType:
+		m_vPower = 0;
+		m_hPower = 0;
 		break;
 	case KumaType:
+		m_vPower = 0;
+		m_hPower = 0;
 		break;
 	}
-}	
+}
+
+void Player::Render(GameWnd* _wnd)
+{
+	const int width = abs((int) (m_sprite->GetRect().left - m_sprite->GetPivot().x));
+	const int height = abs((int) (m_sprite->GetRect().top - m_sprite->GetPivot().y));
+	D2D1_RECT_F dest = { m_pos.x - width, m_pos.y - height, m_pos.x + width, m_pos.y };
+	_wnd->GetBRT()->DrawBitmap(ResourceManger::GetBitmap(m_filePath, _wnd->GetRRT())->GetBitmap(), dest, 1.0f, D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, m_sprite->GetRect());
+
+}
 
 void Player::KeyUpBind(WPARAM _wparam)
 {

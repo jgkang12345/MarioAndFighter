@@ -47,7 +47,6 @@
     <ClCompile Include="FileUtils.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Player.cpp">
       <Filter>GameObj</Filter>
     </ClCompile>
@@ -59,6 +58,12 @@
     </ClCompile>
     <ClCompile Include="SceenManager.cpp">
       <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSceen.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -99,7 +104,6 @@
     <ClInclude Include="FileUtils.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Camera.h" />
     <ClInclude Include="Player.h">
       <Filter>GameObj</Filter>
     </ClInclude>
@@ -111,6 +115,12 @@
     </ClInclude>
     <ClInclude Include="SceenManager.h">
       <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSceen.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

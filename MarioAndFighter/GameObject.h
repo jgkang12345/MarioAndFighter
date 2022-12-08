@@ -11,7 +11,7 @@ protected:
 	char	   m_filePath [256];
 public:
 	GameObject(ObjectType _type) : m_objType(_type) {};
-	~GameObject() {};
+	virtual ~GameObject() {};
 public:
 	Pos	GetPos() { return m_pos; }
 	Dir GetDir() { return m_dir; }

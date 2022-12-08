@@ -1,5 +1,6 @@
 #include "SceenManager.h"
 #include "Sceen.h"
+#include "GameSceen.h"
 SceenManager* SceenManager::m_instance = nullptr;
 SceenManager* SceenManager::GetInstance()
 {
@@ -19,7 +20,7 @@ void SceenManager::Render(GameWnd* _wnd)
 
 void SceenManager::Init(GameWnd* _wnd)
 {
-	Sceen* sceen = new Sceen("stage1.map", _wnd);
+	Sceen* sceen = new GameSceen("stage1.map","overworld_mario.png","stage1Player.spr",_wnd);
 	m_sceens.push_back(sceen);
 }
 

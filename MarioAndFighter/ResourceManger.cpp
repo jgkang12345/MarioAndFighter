@@ -62,15 +62,6 @@ void* ResourceManger::LoadBinaryData(const char* _path)
 				delete[] bStream;
 			}
 			delete header;
-
-		}
-		else if (0 == strcmp(exp, "map"))
-		{
-			MapDataBinaryFile* file = new MapDataBinaryFile;
-			fread(file, sizeof(MapDataBinaryFile), 1, p_file);
-			if (file)
-				ret = new Map(*file);
-			delete file;
 		}
 	}
 
