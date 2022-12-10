@@ -1,6 +1,7 @@
 #pragma once
 #include "Type.h"
 #include "Player.h"
+class GameWnd;
 class Map
 {
 private:
@@ -9,9 +10,9 @@ private:
 	int   m_YSize;
 	char m_filePath[256];
 	char m_imgFilePath[256];
-	//class Bitmap* m_playerBitmap;
+	class Monster* m_monster;
 public:
-	Map(const char* _mapFilePath, Player* _player);
+	Map(const char* _mapFilePath, Player* _player, GameWnd* _wnd);
 	~Map();
 public:
 	char* GetFileName() { return m_imgFilePath; }

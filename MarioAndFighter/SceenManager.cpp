@@ -20,7 +20,7 @@ void SceenManager::Render(GameWnd* _wnd)
 
 void SceenManager::Init(GameWnd* _wnd)
 {
-	Sceen* sceen = new GameSceen("stage1.map","overworld_mario.png","stage1Player.spr",_wnd);
+	Sceen* sceen = new GameSceen(_wnd);
 	m_sceens.push_back(sceen);
 }
 

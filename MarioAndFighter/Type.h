@@ -63,7 +63,8 @@ enum EVENT_TYPE : int
 	PlayerType = 2,
 	NefendesType = 3,
 	GhostType = 4,
-	KumaType = 5
+	KumaType = 5,
+	NefendesRect = 6
 };
 
 
@@ -76,6 +77,11 @@ enum RESOURCE_TYPE : int
 	GAME_OBJECT = 4
 };
 
+enum SCEEN_STATE 
+{
+	OVER_WORLD = 0,
+	BATTLE = 1
+};
 #define magnification 2.0
 #define tileWidth 16
 #define cameraW	100
@@ -85,3 +91,5 @@ enum RESOURCE_TYPE : int
 
 #define powerX 2
 #define powerY 2
+
+#define mapCount 1

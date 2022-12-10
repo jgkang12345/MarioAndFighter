@@ -1,10 +1,7 @@
 #pragma once
 #include "GameObject.h"
-#include <Windows.h>
-#include "Type.h"
-class Sprite;
 class Animation;
-class Player : public GameObject
+class Monster : public GameObject
 {
 private:
 	SCEEN_STATE m_sceen_state;
@@ -13,19 +10,19 @@ private:
 	Animation* m_downMove;
 	Animation* m_idle;
 public:
-	Player() : GameObject(PlayerObj) {};
-	virtual ~Player() {};
+	Monster(ObjectType _type, class GameWnd* _wnd) : GameObject(_type) { Init(_wnd); };
+	virtual ~Monster() {  };
 public:
+	void Init(GameWnd* _wnd);
+	void NefendesInit(GameWnd* _wnd);
 	void SetLeftMove(Animation* _ani) { m_leftMove = _ani; };
 	void SetTopMove(Animation* _ani) { m_topMove = _ani; };
 	void SetDownMove(Animation* _ani) { m_downMove = _ani; };
 	void SetIdle(Animation* _ani);
-	void Update(class Map* _map);
+	void Update(class Map* _map, class Player*);
 	void Render(class GameWnd* _wnd);
-	void KeyUpBind(WPARAM _wparam);
-	void KeyDownBind(WPARAM _param);
 	void SetSceenState(SCEEN_STATE _state) { m_sceen_state = _state; }
-	void BattleUpdate(Map* _map);
-	void OverWorldUpdate(Map* _map);
+	void BattleUpdate(Map* _map, class Player*);
+	void OverWorldUpdate(Map* _map, class Player*);
 };
 

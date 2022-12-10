@@ -9,7 +9,8 @@
 #include "ResourceManger.h"
 #include "GameWnd.h"
 #include "Bitmap.h"
-Map::Map(const char* _mapFilePath, Player* _player)
+#include "Monster.h"
+Map::Map(const char* _mapFilePath, Player* _player, GameWnd* _wnd)
 {
 	FILE* p_file = NULL;
 	MapDataBinaryFile* file = new MapDataBinaryFile;
@@ -35,9 +36,28 @@ Map::Map(const char* _mapFilePath, Player* _player)
 			for (int x = 0; x < m_XSize; x++)
 			{
 				m_mapData[y][x] = (*file).mapData[y][x];
-				if (m_mapData[y][x] == EVENT_TYPE::PlayerType)
+				switch (m_mapData[y][x])
 				{
+				case EVENT_TYPE::PlayerType:
 					_player->SetPos({ ((((x + 1) * tileWidth) - (x * tileWidth)) / 2) + (x * tileWidth), y * tileWidth + tileWidth });
+					break;
+
+				case EVENT_TYPE::NefendesType:
+					m_monster = new Monster(NefendesObj, _wnd);
+					m_monster->SetPos({ ((((x + 1) * tileWidth) - (x * tileWidth)) / 2) + (x * tileWidth), y * tileWidth + tileWidth });
+					break;
+
+				case EVENT_TYPE::GhostType:
+					m_monster = new Monster(GhostObj, _wnd);
+					m_monster->SetPos({ ((((x + 1) * tileWidth) - (x * tileWidth)) / 2) + (x * tileWidth), y * tileWidth + tileWidth });
+					break;
+
+				case EVENT_TYPE::KumaType:
+					m_monster = new Monster(KumaObj, _wnd);
+					m_monster->SetPos({ ((((x + 1) * tileWidth) - (x * tileWidth)) / 2) + (x * tileWidth), y * tileWidth + tileWidth });
+					break;
+				default:
+					break;
 				}
 			}
 		}
@@ -58,6 +78,8 @@ void Map::Update(Player* _player)
 void Map::Render(GameWnd* _wnd)
 {
 	_wnd->GetBRT()->DrawBitmap(ResourceManger::GetBitmap(m_imgFilePath, _wnd->GetRRT())->GetBitmap());
+	if (m_monster)
+		m_monster->Render(_wnd);
 }
 
 EVENT_TYPE Map::GetTileType(const Pos& pos)

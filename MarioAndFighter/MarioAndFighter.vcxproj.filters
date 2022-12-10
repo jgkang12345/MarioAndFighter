@@ -65,6 +65,7 @@
     <ClCompile Include="Camera.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="Monster.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MarioAndFighterApp.h" />
@@ -122,5 +123,6 @@
     <ClInclude Include="Camera.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Monster.h" />
   </ItemGroup>
 </Project>

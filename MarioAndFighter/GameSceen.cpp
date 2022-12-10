@@ -3,12 +3,16 @@
 #include "Camera.h"
 #include "ResourceManger.h"
 #include "GameWnd.h"
+#include "Animation.h"
+#include "Type.h"
 void GameSceen::Update(GameWnd* _wnd)
 {
-	if (m_map && m_camera && m_player)
+	Map* map = *m_map.begin();
+
+	if (map && m_camera && m_player)
 	{
-		m_map->Update(m_player);
-		m_camera->Update(m_player, m_map);
+		map->Update(m_player);
+		m_camera->Update(m_player, map);
 	}
 }
 
@@ -17,8 +21,9 @@ void GameSceen::Render(GameWnd* _wnd)
 	ID2D1Bitmap* bitmap;
 	_wnd->GetBRT()->BeginDraw();
 	_wnd->GetBRT()->Clear(D2D1::ColorF(D2D1::ColorF::Black));
-	
-	m_map->Render(_wnd);
+	Map* map = *m_map.begin();
+	if (map)
+		map->Render(_wnd);
 	m_player->Render(_wnd);
 
 	_wnd->GetBRT()->EndDraw();
@@ -33,15 +38,23 @@ void GameSceen::Render(GameWnd* _wnd)
 	_wnd->GetRT()->EndDraw();
 }
 
-void GameSceen::Init(const char* _mapPath, const char* _playerPath, const char* _spritPath, GameWnd* _wnd)
+void GameSceen::Init(GameWnd* _wnd)
 {
 	m_player = new Player();
-	m_map = new Map(_mapPath, m_player);
-	ResourceManger::GetBitmap(m_map->GetFileName(), _wnd->GetRRT());
-	m_player->SetFilePath(_playerPath);
-	m_player->SetSprite(reinterpret_cast<Sprite*>(ResourceManger::LoadBinaryData(_spritPath)));
+	m_player->SetFilePath("overworld_mario.png");
+	m_player->SetLeftMove(reinterpret_cast<Animation*>(ResourceManger::LoadBinaryData("playerLeftMove2.spr")));
+	m_player->SetDownMove(reinterpret_cast<Animation*>(ResourceManger::LoadBinaryData("playerDownMove.spr")));
+	m_player->SetTopMove(reinterpret_cast<Animation*>(ResourceManger::LoadBinaryData("playerUpMove.spr")));
+	m_player->SetIdle(reinterpret_cast<Animation*>(ResourceManger::LoadBinaryData("playerIdle.spr")));
 	ResourceManger::GetBitmap(m_player->GetFilePath(), _wnd->GetRRT());
-	m_camera = new Camera(m_player->GetPos().x, m_player->GetPos().y, m_map);
+	const char* aa[mapCount] = { "stage1.map" };
+	for (int i = 0; i < mapCount; i++) 
+	{
+		Map* tempV = new Map(aa[i], m_player, _wnd);
+		ResourceManger::GetBitmap(tempV->GetFileName(), _wnd->GetRRT());
+		m_map.push_back(tempV);
+	}	
+	m_camera = new Camera(m_player->GetPos().x, m_player->GetPos().y, *m_map.begin());
 }
 
 void GameSceen::Clean()

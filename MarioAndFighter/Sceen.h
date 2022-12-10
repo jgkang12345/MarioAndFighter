@@ -10,7 +10,7 @@ public:
 public:
 	virtual void	Update(GameWnd* _wnd) abstract;
 	virtual void	Render(GameWnd* _wnd) abstract;
-	virtual void	Init(const char* _mapPath, const char* _playerPath, const char* _spritPath, GameWnd* _wnd) abstract;
+	virtual void	Init(GameWnd* _wnd) abstract;
 	virtual void	Clean() abstract;
 	virtual void	KeyDownBind(WPARAM _param) abstract;
 	virtual void	KeyUpBind(WPARAM _wparam) abstract;
