@@ -66,6 +66,9 @@
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="Monster.cpp" />
+    <ClCompile Include="LoadingSceen.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MarioAndFighterApp.h" />
@@ -124,5 +127,8 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="Monster.h" />
+    <ClInclude Include="LoadingSceen.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

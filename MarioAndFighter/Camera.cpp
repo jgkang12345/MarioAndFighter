@@ -2,34 +2,6 @@
 #include "Type.h"
 #include "Player.h"
 #include "Map.h"
-Camera::Camera(const int& _x, const int& _y, class Map* _map)
-{
-	int c_left = _x - cameraW;
-	int c_top = _y - cameraH;
-	int c_width = _x + cameraW;
-	int c_height = _y + cameraH;
-	if (c_left < 0)
-	{
-		c_left = 0;
-		c_width = cameraW * 2;
-	}
-	if (c_top < 0)
-	{
-		c_top = 0;
-		c_height = cameraH * 2;
-	}
-	if (c_width > (_map->GetXSize()) * tileWidth)
-	{
-		c_width = (_map->GetXSize()) * tileWidth;
-	}
-	if (c_height > (_map->GetYSize()) * tileWidth)
-	{
-		c_height = (_map->GetYSize()) * tileWidth;
-	}
-	D2D1_RECT_F cameraZone = { c_left, c_top, c_width, c_height };
-	SetCameraRect(cameraZone);
-}
-
 Camera::~Camera()
 {
 
@@ -75,4 +47,32 @@ void Camera::Update(Player* _player, Map* _map)
 		D2D1_RECT_F cameraZone = { c_left, c_top, c_width, c_height };
 		m_cameraRect = cameraZone;
 	}
+}
+
+void Camera::Init(const int& _x, const int& _y, Map* _map)
+{
+	int c_left = _x - cameraW;
+	int c_top = _y - cameraH;
+	int c_width = _x + cameraW;
+	int c_height = _y + cameraH;
+	if (c_left < 0)
+	{
+		c_left = 0;
+		c_width = cameraW * 2;
+	}
+	if (c_top < 0)
+	{
+		c_top = 0;
+		c_height = cameraH * 2;
+	}
+	if (c_width > (_map->GetXSize()) * tileWidth)
+	{
+		c_width = (_map->GetXSize()) * tileWidth;
+	}
+	if (c_height > (_map->GetYSize()) * tileWidth)
+	{
+		c_height = (_map->GetYSize()) * tileWidth;
+	}
+	D2D1_RECT_F cameraZone = { c_left, c_top, c_width, c_height };
+	SetCameraRect(cameraZone);
 }

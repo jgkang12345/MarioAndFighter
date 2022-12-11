@@ -10,6 +10,7 @@
 #include "GameWnd.h"
 #include "Bitmap.h"
 #include "Monster.h"
+#include "SceenManager.h"
 Map::Map(const char* _mapFilePath, Player* _player, GameWnd* _wnd)
 {
 	FILE* p_file = NULL;
@@ -39,7 +40,8 @@ Map::Map(const char* _mapFilePath, Player* _player, GameWnd* _wnd)
 				switch (m_mapData[y][x])
 				{
 				case EVENT_TYPE::PlayerType:
-					_player->SetPos({ ((((x + 1) * tileWidth) - (x * tileWidth)) / 2) + (x * tileWidth), y * tileWidth + tileWidth });
+					m_playerStartPos = { ((((x + 1) * tileWidth) - (x * tileWidth)) / 2) + (x * tileWidth), y* tileWidth + tileWidth };
+				/*	_player->SetPos();*/
 					break;
 
 				case EVENT_TYPE::NefendesType:
@@ -67,12 +69,21 @@ Map::Map(const char* _mapFilePath, Player* _player, GameWnd* _wnd)
 
 Map::~Map()
 {
+	for (int i = 0; i < m_YSize; i++) 
+	{
+		if (m_mapData[i])
+			delete[] m_mapData[i];
+	}
+	if (m_mapData)
+		delete[] m_mapData;
 
+	if (m_monster)
+		delete m_monster;
 }
 
 void Map::Update(Player* _player)
 {
-	_player->Update(this);
+
 }
 
 void Map::Render(GameWnd* _wnd)
@@ -84,8 +95,18 @@ void Map::Render(GameWnd* _wnd)
 
 EVENT_TYPE Map::GetTileType(const Pos& pos)
 {
-	const int x = pos.x / tileWidth;
-	const int y = pos.y / tileWidth;
+	int x = pos.x / tileWidth;
+	int y;
+
+	char target[] = "battle";
+	if (NULL != strstr(GetFileName(), target))
+	{
+		y = ( pos.y / tileWidth ) - 1;
+	}
+	else
+	{
+		y = (pos.y / tileWidth);
+	}
 	
 	if (y < 0 || x < 0 || x >= m_XSize || y >= m_YSize || pos.x < 0 || pos.y < 0)
 		return EVENT_TYPE::WALLType;

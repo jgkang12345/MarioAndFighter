@@ -9,21 +9,25 @@
 #include "Bitmap.h"
 #include "Animation.h"
 #include "FPSManager.h"
+#include "Map.h"
+#include "SceenManager.h"
+#include "Camera.h"
+#include "Monster.h"
 void Player::SetIdle(Animation* _ani)
 {
 	m_idle = _ani; 
 }
-void Player::Update(Map* _map)
+void Player::Update(Map* _map, std::list<Map*>& _maplist)
 {
 
 	switch (m_sceen_state)
 	{
 	case OVER_WORLD:
-		OverWorldUpdate(_map);
+		OverWorldUpdate(_map, _maplist);
 		break;
 
 	case BATTLE:
-		BattleUpdate(_map);
+		BattleUpdate(_map, _maplist);
 		break;
 	}
 }
@@ -32,34 +36,56 @@ void Player::Render(GameWnd* _wnd)
 {
 	Sprite* frame = nullptr;
 	bool isRotate = false;
-	switch (m_dir)
+	switch (m_sceen_state)
 	{
-	case UP:
-		frame = m_topMove->GetFrame();
+	case OVER_WORLD:
+		switch (m_dir)
+		{
+		case UP:
+			frame = m_topMove->GetFrame();
+			break;
+		case RIGHT:
+			frame = m_leftMove->GetFrame();
+			break;
+		case DOWN:
+			frame = m_downMove->GetFrame();
+			break;
+		case LEFT:
+			frame = m_leftMove->GetFrame();
+			isRotate = true;
+			break;
+		case NONE:
+			frame = m_idle->GetFrame();
+			break;
+		}
 		break;
-	case RIGHT:
-		frame = m_leftMove->GetFrame();
-		break;
-	case DOWN:
-		frame = m_downMove->GetFrame();
-		break;
-	case LEFT:
-		frame = m_leftMove->GetFrame();
-		isRotate = true;
-		break;
-	case NONE:
-		frame = m_idle->GetFrame();
+
+	case BATTLE:
+		switch (m_dir)
+		{
+		case RIGHT:
+			frame = m_leftMove->GetFrame();
+			break;
+		case LEFT:
+			frame = m_leftMove->GetFrame();
+			isRotate = true;
+			break;
+		default:
+			frame = m_idle->GetFrame();
+			break;
+		}
 		break;
 	}
 
-	const int width = abs((int) (frame->GetRect().left - frame->GetPivot().x));
-	const int height = abs((int) (frame->GetRect().top - frame->GetPivot().y));
+	const int width = abs((int)(frame->GetRect().left - frame->GetPivot().x));
+	const int height = abs((int)(frame->GetRect().top - frame->GetPivot().y));
 	D2D1_RECT_F dest = { m_pos.x - width, m_pos.y - height, m_pos.x + width, m_pos.y };
 	if (isRotate)
 		_wnd->GetBRT()->SetTransform(D2D1::Matrix3x2F::Scale(-1.0, 1.0, D2D1::Point2F(m_pos.x, m_pos.x)));
 	_wnd->GetBRT()->DrawBitmap(ResourceManger::GetBitmap(m_filePath, _wnd->GetRRT())->GetBitmap(), dest, 1.0f, D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, frame->GetRect());
 	if (isRotate)
 		_wnd->GetBRT()->SetTransform(D2D1::Matrix3x2F::Identity());
+
 }
 
 void Player::KeyUpBind(WPARAM _wparam)
@@ -110,13 +136,96 @@ void Player::KeyDownBind(WPARAM _param)
 	}
 }
 
-void Player::BattleUpdate(Map* _map)
+void Player::BattleUpdate(Map* _map, std::list<Map*>& _maplist)
 {
+	bool mapIsNext = false;
 
+
+	switch (m_dir)
+	{
+	case RIGHT:
+		m_hPower = powerY;
+		m_vPower = 0;
+		break;
+	case LEFT:
+		m_hPower = -powerY;
+		m_vPower = 0;
+		break;
+	default:
+	case NONE:
+		m_vPower = 0;
+		m_hPower = 0;
+		break;
+	}
+
+	Pos prevPos = m_pos;
+	Pos nextPos = { m_pos.x + m_hPower , m_pos.y + m_vPower };
+
+	switch (_map->GetTileType(nextPos))
+	{
+	case EMPTYType:
+		m_pos = nextPos;
+		break;
+	case WALLType:
+		m_vPower = 0;
+		m_hPower = 0;
+		break;
+	case PlayerType:
+		m_pos = nextPos;
+		break;
+	case NefendesType:
+		m_vPower = 0;
+		m_hPower = 0;
+		mapIsNext = true;
+		break;
+	case GhostType:
+		m_vPower = 0;
+		m_hPower = 0;
+		mapIsNext = true;
+		break;
+	case KumaType:
+		m_vPower = 0;
+		m_hPower = 0;
+		mapIsNext = true;
+		break;
+	case NefendesRect:
+		m_vPower = 0;
+		m_hPower = 0;
+		mapIsNext = true;
+		break;
+	case GhostRect:
+		m_vPower = 0;
+		m_hPower = 0;
+		mapIsNext = true;
+	}
+
+	if (mapIsNext && _maplist.size() != 1)
+	{
+		SceenManager::GetInstance()->SetSceen(LOADING);
+		delete* _maplist.begin();
+		_maplist.pop_front();
+		this->SetPos((*_maplist.begin())->GetPlayerStartPos());
+		m_camera->Init(m_pos.x, m_pos.y, *_maplist.begin());
+		char target[] = "battle";
+		if (NULL != strstr((*_maplist.begin())->GetFileName(), target))
+		{
+			m_sceen_state = BATTLE;
+			(*_maplist.begin())->GetMonster()->SetSceenState(BATTLE);
+		}
+		else
+		{
+			m_sceen_state = OVER_WORLD;
+			(*_maplist.begin())->GetMonster()->SetSceenState(OVER_WORLD);
+		}
+		m_dir = Dir::NONE;
+	}
 }
 
-void Player::OverWorldUpdate(Map* _map)
+void Player::OverWorldUpdate(Map* _map, std::list<Map*>& _maplist)
 {
+	bool mapIsNext = false;
+
+
 	switch (m_dir)
 	{
 	case UP:
@@ -159,18 +268,48 @@ void Player::OverWorldUpdate(Map* _map)
 	case NefendesType:
 		m_vPower = 0;
 		m_hPower = 0;
+		mapIsNext = true;
 		break;
 	case GhostType:
 		m_vPower = 0;
 		m_hPower = 0;
+		mapIsNext = true;
 		break;
 	case KumaType:
 		m_vPower = 0;
 		m_hPower = 0;
+		mapIsNext = true;
 		break;
 	case NefendesRect:
 		m_vPower = 0;
 		m_hPower = 0;
+		mapIsNext = true;
 		break;
+	case GhostRect:
+		m_vPower = 0;
+		m_hPower = 0;
+		mapIsNext = true;
+		break;
+	}
+
+	if (mapIsNext && _maplist.size() != 1)
+	{
+		SceenManager::GetInstance()->SetSceen(LOADING);
+		delete *_maplist.begin();
+		_maplist.pop_front();
+		this->SetPos((*_maplist.begin())->GetPlayerStartPos());
+		m_camera->Init(m_pos.x, m_pos.y, *_maplist.begin());
+		char target[] = "battle";
+		if (NULL != strstr((*_maplist.begin())->GetFileName(), target) )
+		{
+			m_sceen_state = BATTLE;
+			(*_maplist.begin())->GetMonster()->SetSceenState(BATTLE);
+		}
+		else
+		{
+			m_sceen_state = OVER_WORLD;
+			(*_maplist.begin())->GetMonster()->SetSceenState(OVER_WORLD);
+		}
+		m_dir = Dir::NONE;			
 	}
 }

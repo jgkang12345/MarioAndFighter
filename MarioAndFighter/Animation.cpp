@@ -22,6 +22,13 @@ Sprite* Animation::GetFrame()
 	return ret;
 }
 
+Sprite* Animation::GetFrameUnique()
+{
+	Sprite* ret = m_clips[m_nowFrame];
+	m_nowFrame = (m_nowFrame + 1);
+	return ret;
+}
+
 Sprite* Animation::GetFrameNow()
 {
 	return m_clips[m_nowFrame];

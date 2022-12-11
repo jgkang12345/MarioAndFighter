@@ -5,6 +5,20 @@
 #include "Animation.h"
 #include "Sprite.h"
 #include "Bitmap.h"
+Monster::~Monster()
+{
+	if (m_leftMove)
+		delete m_leftMove;
+
+	if (m_topMove)
+		delete m_topMove;
+
+	if (m_downMove)
+		delete m_downMove;
+	
+	if (m_idle)
+		delete m_idle;
+}
 void Monster::Init(GameWnd* _wnd)
 {
 	switch (m_objType)
@@ -13,6 +27,7 @@ void Monster::Init(GameWnd* _wnd)
 		NefendesInit(_wnd);
 		break;
 	case GhostObj:
+		GhostInit(_wnd);
 		break;
 	case KumaObj:
 		break;
@@ -23,6 +38,13 @@ void Monster::NefendesInit(GameWnd* _wnd)
 {
 	SetFilePath("NefendesObj.png");
 	SetIdle(reinterpret_cast<Animation*>(ResourceManger::LoadBinaryData("NeftendesAnimation.spr")));
+	ResourceManger::GetBitmap(GetFilePath(), _wnd->GetRRT());
+}
+
+void Monster::GhostInit(GameWnd* _wnd)
+{
+	SetFilePath("Ghost.png");
+	SetIdle(reinterpret_cast<Animation*>(ResourceManger::LoadBinaryData("Ghost.spr")));
 	ResourceManger::GetBitmap(GetFilePath(), _wnd->GetRRT());
 }
 

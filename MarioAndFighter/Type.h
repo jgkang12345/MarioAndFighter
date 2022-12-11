@@ -64,7 +64,8 @@ enum EVENT_TYPE : int
 	NefendesType = 3,
 	GhostType = 4,
 	KumaType = 5,
-	NefendesRect = 6
+	NefendesRect = 6,
+	GhostRect = 7
 };
 
 
@@ -82,6 +83,12 @@ enum SCEEN_STATE
 	OVER_WORLD = 0,
 	BATTLE = 1
 };
+
+enum SCEEN
+{
+	GAME = 0,
+	LOADING = 1
+};
 #define magnification 2.0
 #define tileWidth 16
 #define cameraW	100
@@ -92,4 +99,4 @@ enum SCEEN_STATE
 #define powerX 2
 #define powerY 2
 
-#define mapCount 1
+#define mapCount 3

@@ -12,7 +12,10 @@ public:
 	~Animation();
 	void AddClip(Sprite* _sprite);
 	Sprite* GetFrame();
+	Sprite* GetFrameUnique();
 	Sprite* GetFrameNow();
 	int		GetFrameCount() { return m_clips.size(); }
+	int		GetIndex() { return m_nowFrame; }
 	std::vector<Sprite*>& GetClips() { return m_clips; };
+	void Init() { m_nowFrame = 0; }
 };

@@ -11,7 +11,8 @@ void GameSceen::Update(GameWnd* _wnd)
 
 	if (map && m_camera && m_player)
 	{
-		map->Update(m_player);
+		// map->Update(m_player);
+		m_player->Update(map, m_map);
 		m_camera->Update(m_player, map);
 	}
 }
@@ -47,14 +48,16 @@ void GameSceen::Init(GameWnd* _wnd)
 	m_player->SetTopMove(reinterpret_cast<Animation*>(ResourceManger::LoadBinaryData("playerUpMove.spr")));
 	m_player->SetIdle(reinterpret_cast<Animation*>(ResourceManger::LoadBinaryData("playerIdle.spr")));
 	ResourceManger::GetBitmap(m_player->GetFilePath(), _wnd->GetRRT());
-	const char* aa[mapCount] = { "stage1.map" };
+	const char* aa[mapCount] = { "stage1.map", "battle1.map", "stage2.map"};
 	for (int i = 0; i < mapCount; i++) 
 	{
 		Map* tempV = new Map(aa[i], m_player, _wnd);
 		ResourceManger::GetBitmap(tempV->GetFileName(), _wnd->GetRRT());
 		m_map.push_back(tempV);
 	}	
+	m_player->SetPos((*m_map.begin())->GetPlayerStartPos());
 	m_camera = new Camera(m_player->GetPos().x, m_player->GetPos().y, *m_map.begin());
+	m_player->SetCamera(m_camera);
 }
 
 void GameSceen::Clean()

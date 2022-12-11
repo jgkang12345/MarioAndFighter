@@ -136,6 +136,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameSceen.h" />
     <ClInclude Include="GameWnd.h" />
+    <ClInclude Include="LoadingSceen.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MarioAndFighterApp.h" />
     <ClInclude Include="Monster.h" />
@@ -158,6 +159,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameSceen.cpp" />
     <ClCompile Include="GameWnd.cpp" />
+    <ClCompile Include="LoadingSceen.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MarioAndFighterApp.cpp" />

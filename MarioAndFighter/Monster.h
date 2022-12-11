@@ -11,10 +11,11 @@ private:
 	Animation* m_idle;
 public:
 	Monster(ObjectType _type, class GameWnd* _wnd) : GameObject(_type) { Init(_wnd); };
-	virtual ~Monster() {  };
+	virtual ~Monster();
 public:
 	void Init(GameWnd* _wnd);
 	void NefendesInit(GameWnd* _wnd);
+	void GhostInit(GameWnd* _wnd);
 	void SetLeftMove(Animation* _ani) { m_leftMove = _ani; };
 	void SetTopMove(Animation* _ani) { m_topMove = _ani; };
 	void SetDownMove(Animation* _ani) { m_downMove = _ani; };
@@ -22,6 +23,7 @@ public:
 	void Update(class Map* _map, class Player*);
 	void Render(class GameWnd* _wnd);
 	void SetSceenState(SCEEN_STATE _state) { m_sceen_state = _state; }
+	SCEEN_STATE GetSceenState() { return m_sceen_state; }
 	void BattleUpdate(Map* _map, class Player*);
 	void OverWorldUpdate(Map* _map, class Player*);
 };

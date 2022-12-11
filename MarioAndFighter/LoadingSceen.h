@@ -1,19 +1,14 @@
 #pragma once
 #include "Sceen.h"
-#include <list>
-class GameSceen : public Sceen
+class LoadingSceen : public Sceen
 {
 private:
-	std::list<class Map*> m_map;
-	class Camera* m_camera;
-	class Player* m_player;
+	class Animation* m_loading;
+	int m_loadingCount = 0;
+	char m_filePath [256];
 public:
-	GameSceen(GameWnd* _wnd) { Init(_wnd); }
-	GameSceen(const char* _mapPath
-		, const char* _playerPath
-		, GameWnd* _wnd) : Sceen() { Init(_wnd); }
-	~GameSceen() { Clean(); }
-	void GetInstance();
+	LoadingSceen(GameWnd* _wnd) { Init(_wnd); }
+	~LoadingSceen() { Clean(); }
 public:
 	virtual void	Update(GameWnd* _wnd) override;
 	virtual void	Render(GameWnd* _wnd) override;
@@ -22,3 +17,5 @@ public:
 	virtual void	KeyDownBind(WPARAM _param) override;
 	virtual void	KeyUpBind(WPARAM _wparam) override;
 };
+
+
