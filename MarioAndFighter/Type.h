@@ -91,8 +91,8 @@ enum SCEEN
 };
 #define magnification 2.0
 #define tileWidth 16
-#define cameraW	100
-#define cameraH 100
+#define cameraW	150
+#define cameraH 150
 #define boundW 30
 #define boundH 30
 

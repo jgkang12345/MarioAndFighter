@@ -20,7 +20,7 @@ public:
 	int   GetXSize() { return m_XSize; }
 	int   GetYSize() { return m_YSize; }
 	void  Update(Player* _player);
-	void  Render(class GameWnd* _wnd);
+	void  Render(class GameWnd* _wnd, class Player* _player);
 	Monster* GetMonster() { return m_monster; }
 	EVENT_TYPE	GetTileType(const Pos& pos);
 	Pos GetPlayerStartPos() { return m_playerStartPos; };

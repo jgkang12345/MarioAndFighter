@@ -5,6 +5,7 @@
 #include "GameWnd.h"
 #include "Animation.h"
 #include "Type.h"
+#include "Monster.h"
 void GameSceen::Update(GameWnd* _wnd)
 {
 	Map* map = *m_map.begin();
@@ -23,9 +24,8 @@ void GameSceen::Render(GameWnd* _wnd)
 	_wnd->GetBRT()->BeginDraw();
 	_wnd->GetBRT()->Clear(D2D1::ColorF(D2D1::ColorF::Black));
 	Map* map = *m_map.begin();
-	if (map)
-		map->Render(_wnd);
-	m_player->Render(_wnd);
+	
+	map->Render(_wnd, m_player);
 
 	_wnd->GetBRT()->EndDraw();
 	_wnd->GetBRT()->GetBitmap(&bitmap);

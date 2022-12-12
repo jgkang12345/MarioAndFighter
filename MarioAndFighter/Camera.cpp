@@ -21,11 +21,11 @@ bool Camera::IsCrash(Player* _player, Map* _map)
 	{
 		ret = true;
 	}
-	if (m_cameraRect.right + hPower > (_map->GetXSize()) * tileWidth && hPower == powerX)
+	if (m_cameraRect.right + hPower >= (_map->GetXSize()) * tileWidth && hPower == powerX)
 	{
 		ret = true;
 	}
-	if (m_cameraRect.bottom + vPower > (_map->GetYSize()) * tileWidth && vPower == powerY)
+	if (m_cameraRect.bottom + vPower >= (_map->GetYSize()) * tileWidth && vPower == powerY)
 	{
 		ret = true;
 	}

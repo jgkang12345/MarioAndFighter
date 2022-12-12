@@ -11,6 +11,8 @@
 #include "Bitmap.h"
 #include "Monster.h"
 #include "SceenManager.h"
+#include <algorithm>
+#include "GameObject.h"
 Map::Map(const char* _mapFilePath, Player* _player, GameWnd* _wnd)
 {
 	FILE* p_file = NULL;
@@ -86,11 +88,28 @@ void Map::Update(Player* _player)
 
 }
 
-void Map::Render(GameWnd* _wnd)
+void Map::Render(GameWnd* _wnd, Player* _player)
 {
 	_wnd->GetBRT()->DrawBitmap(ResourceManger::GetBitmap(m_imgFilePath, _wnd->GetRRT())->GetBitmap());
-	if (m_monster)
-		m_monster->Render(_wnd);
+
+	std::vector<GameObject*> objects;
+	objects.push_back(m_monster);
+	objects.push_back(_player);
+	sort(objects.begin(), objects.end(), [](GameObject* _left, GameObject* _right) 
+		{ 
+		if (_left->GetPos().y != _right->GetPos().y) 
+			return _left->GetPos().y < _right->GetPos().y; 
+		else 
+			return _left->GetPos().x < _right->GetPos().x; 
+		}
+	);
+	for (auto& item : objects) 
+	{
+		if (item->GetObjectType() == PlayerObj)
+			reinterpret_cast<Player*>(item)->Render(_wnd);
+		else
+			reinterpret_cast<Monster*>(item)->Render(_wnd);
+	}
 }
 
 EVENT_TYPE Map::GetTileType(const Pos& pos)

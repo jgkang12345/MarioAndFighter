@@ -2,6 +2,8 @@
 #include <Windows.h>
 struct Pos;
 class GameWnd;
+
+// Scene
 class Sceen
 {
 public:
