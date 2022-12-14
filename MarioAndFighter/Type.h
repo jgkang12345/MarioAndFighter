@@ -23,6 +23,15 @@ enum Dir : int
 	NONE = 4
 };
 
+enum STATE : int
+{
+	NONE_STATE = 0,
+	ATTACK = 1,
+	ATTACK_ING = 2,
+	LATTACK = 3,
+	LATTACK_ING = 4
+};
+
 struct MapDataBinaryFile
 {
 	char imgFileName[256]; // path
@@ -100,3 +109,5 @@ enum SCEEN
 #define powerY 2
 
 #define mapCount 3
+#define jumpMax 30
+#define jumpPower 3

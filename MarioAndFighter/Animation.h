@@ -16,6 +16,9 @@ public:
 	Sprite* GetFrameNow();
 	int		GetFrameCount() { return m_clips.size(); }
 	int		GetIndex() { return m_nowFrame; }
+	Sprite*  Jumping();
+	Sprite* JumpEnd();
+	Sprite* JumpDone();
 	std::vector<Sprite*>& GetClips() { return m_clips; };
 	void Init() { m_nowFrame = 0; }
 };

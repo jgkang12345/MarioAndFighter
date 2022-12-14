@@ -17,6 +17,22 @@ void Player::SetIdle(Animation* _ani)
 {
 	m_idle = _ani; 
 }
+void Player::SetBIdle(Animation* _ani)
+{
+	m_bidle = _ani;
+}
+void Player::SetBleft(Animation* _ani)
+{
+	m_bleftMove = _ani;
+}
+void Player::SetBAttack(Animation* _ani)
+{
+	m_bAttack = _ani;
+}
+void Player::SetBLAttack(Animation* _ani)
+{
+	m_bLAttack = _ani;
+}
 void Player::Update(Map* _map, std::list<Map*>& _maplist)
 {
 
@@ -36,9 +52,13 @@ void Player::Render(GameWnd* _wnd)
 {
 	Sprite* frame = nullptr;
 	bool isRotate = false;
+	char* bitmapPath = NULL;
+
+
 	switch (m_sceen_state)
 	{
 	case OVER_WORLD:
+		bitmapPath = m_filePath;
 		switch (m_dir)
 		{
 		case UP:
@@ -61,19 +81,70 @@ void Player::Render(GameWnd* _wnd)
 		break;
 
 	case BATTLE:
+		bitmapPath = m_bfilePath;
 		switch (m_dir)
 		{
 		case RIGHT:
-			frame = m_leftMove->GetFrame();
+			frame = m_bleftMove->GetFrame();
 			break;
 		case LEFT:
-			frame = m_leftMove->GetFrame();
+			frame = m_bleftMove->GetFrame();
 			isRotate = true;
 			break;
 		default:
-			frame = m_idle->GetFrame();
+			frame = m_bidle->GetFrame();
 			break;
 		}
+
+		switch (m_jumpState)
+		{
+		case JUMP_UP:	
+			frame = m_bJump->Jumping();
+			break;
+
+		case JUMP_END:
+			frame = m_bJump->Jumping();
+			break;
+
+		case JUMP_DOWN:
+			frame = m_bJump->JumpEnd();
+			break;
+
+		case JUMP_DONE:
+			frame = m_bJump->JumpDone();
+			break;
+		}
+
+
+		switch (m_state)
+		{
+		case ATTACK:
+			m_state = ATTACK_ING;
+			break;
+
+		case ATTACK_ING:
+			frame = m_bAttack->GetFrameUnique();
+			if (m_bAttack->GetFrameCount() == m_bAttack->GetIndex()) 
+			{
+				m_bAttack->Init();
+				m_state = STATE::NONE_STATE;
+			}
+			break;
+		
+		case LATTACK:
+			m_state = LATTACK_ING;
+			break;
+		
+		case LATTACK_ING:
+			frame = m_bLAttack->GetFrameUnique();
+			if (m_bLAttack->GetFrameCount() == m_bLAttack->GetIndex())
+			{
+				m_bLAttack->Init();
+				m_state = STATE::NONE_STATE;
+			}
+			break;
+		}
+
 		break;
 	}
 
@@ -82,7 +153,7 @@ void Player::Render(GameWnd* _wnd)
 	D2D1_RECT_F dest = { m_pos.x - width, m_pos.y - height, m_pos.x + width, m_pos.y };
 	if (isRotate)
 		_wnd->GetBRT()->SetTransform(D2D1::Matrix3x2F::Scale(-1.0, 1.0, D2D1::Point2F(m_pos.x, m_pos.x)));
-	_wnd->GetBRT()->DrawBitmap(ResourceManger::GetBitmap(m_filePath, _wnd->GetRRT())->GetBitmap(), dest, 1.0f, D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, frame->GetRect());
+	_wnd->GetBRT()->DrawBitmap(ResourceManger::GetBitmap(bitmapPath, _wnd->GetRRT())->GetBitmap(), dest, 1.0f, D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, frame->GetRect());
 	if (isRotate)
 		_wnd->GetBRT()->SetTransform(D2D1::Matrix3x2F::Identity());
 
@@ -111,6 +182,9 @@ void Player::KeyUpBind(WPARAM _wparam)
 		if (m_dir == Dir::LEFT)
 			m_dir = Dir::NONE;
 		break;
+
+	case 65:
+		break;
 	}
 }
 
@@ -133,33 +207,84 @@ void Player::KeyDownBind(WPARAM _param)
 	case VK_LEFT:
 		m_dir = Dir::LEFT;
 		break;
+
+	case 65:
+		if (m_state == STATE::ATTACK_ING)
+			break;
+		if (m_state == STATE::NONE_STATE)
+			m_state = STATE::ATTACK;
+		break;
+
+	case 83:
+		if (m_state == STATE::LATTACK_ING)
+			break;
+		if (m_state == STATE::NONE_STATE)
+			m_state = STATE::LATTACK;
+		break;
+
+	case 68:
+		if (m_sceen_state == BATTLE && m_jumpState == JUMP_NONE)
+			m_jumpState = JUMP_UP;
+		break;
 	}
 }
 
 void Player::BattleUpdate(Map* _map, std::list<Map*>& _maplist)
 {
 	bool mapIsNext = false;
-
+	int bottomLine = _map->GetPlayerStartPos().y;
+	int topLine = _map->GetPlayerStartPos().y - jumpMax;
 
 	switch (m_dir)
 	{
 	case RIGHT:
 		m_hPower = powerY;
-		m_vPower = 0;
 		break;
 	case LEFT:
 		m_hPower = -powerY;
-		m_vPower = 0;
 		break;
 	default:
 	case NONE:
-		m_vPower = 0;
 		m_hPower = 0;
 		break;
 	}
 
+	switch (m_jumpState)
+	{
+	case JUMP_UP:
+		m_vPower = -jumpPower;
+		break;
+
+	case JUMP_END:
+		m_vPower = 0;
+		m_jumpState = JUMP_DOWN;
+		break;
+
+	case JUMP_DOWN:
+		m_vPower = + (jumpPower+1);
+		break;
+
+	case JUMP_DONE:
+		m_vPower = 0;
+		m_jumpState = JUMP_NONE;
+		break;
+	}
+
 	Pos prevPos = m_pos;
-	Pos nextPos = { m_pos.x + m_hPower , m_pos.y + m_vPower };
+	int y = m_pos.y + m_vPower;
+
+	if (y > bottomLine)
+	{
+		y = bottomLine;
+		m_jumpState = JUMP_DONE;
+	}	
+	if (y < topLine) 
+	{
+		y = topLine;
+		m_jumpState = JUMP_END;
+	}
+
+	Pos nextPos = { m_pos.x + m_hPower , y };
 
 	switch (_map->GetTileType(nextPos))
 	{
@@ -176,27 +301,22 @@ void Player::BattleUpdate(Map* _map, std::list<Map*>& _maplist)
 	case NefendesType:
 		m_vPower = 0;
 		m_hPower = 0;
-		mapIsNext = true;
 		break;
 	case GhostType:
 		m_vPower = 0;
 		m_hPower = 0;
-		mapIsNext = true;
 		break;
 	case KumaType:
 		m_vPower = 0;
 		m_hPower = 0;
-		mapIsNext = true;
 		break;
 	case NefendesRect:
 		m_vPower = 0;
 		m_hPower = 0;
-		mapIsNext = true;
 		break;
 	case GhostRect:
 		m_vPower = 0;
 		m_hPower = 0;
-		mapIsNext = true;
 	}
 
 	if (mapIsNext && _maplist.size() != 1)

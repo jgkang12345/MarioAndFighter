@@ -35,17 +35,27 @@ bool Camera::IsCrash(Player* _player, Map* _map)
 
 void Camera::Update(Player* _player, Map* _map)
 {
-	if (!IsCrash(_player,_map))
+	switch (_player->GetSceenState())
 	{
-		int hPower = _player->GetHPower();
-		int vPower = _player->GetVPower();
+	case OVER_WORLD:
+		if (!IsCrash(_player, _map))
+		{
+			int hPower = _player->GetHPower();
+			int vPower = _player->GetVPower();
 
-		int c_left = m_cameraRect.left + (hPower * 1);
-		int c_top = m_cameraRect.top + (vPower * 1);
-		int c_width = m_cameraRect.right + (hPower * 1);
-		int c_height = m_cameraRect.bottom + (vPower * 1);
-		D2D1_RECT_F cameraZone = { c_left, c_top, c_width, c_height };
+			int c_left = m_cameraRect.left + (hPower * 1);
+			int c_top = m_cameraRect.top + (vPower * 1);
+			int c_width = m_cameraRect.right + (hPower * 1);
+			int c_height = m_cameraRect.bottom + (vPower * 1);
+			D2D1_RECT_F cameraZone = { c_left, c_top, c_width, c_height };
+			m_cameraRect = cameraZone;
+		}
+		break;
+
+	case BATTLE:
+		D2D1_RECT_F cameraZone = { 0, 0, 239, 200 };
 		m_cameraRect = cameraZone;
+		break;
 	}
 }
 

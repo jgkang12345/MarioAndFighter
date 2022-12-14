@@ -6,6 +6,17 @@
 class Sprite;
 class Animation;
 class Camera;
+
+enum JUMP
+{
+	JUMP_UP,
+	JUMP_END,
+	JUMP_DOWN,
+	JUMP_DONE,
+	JUMP_NONE
+};
+
+
 class Player : public GameObject
 {
 private:
@@ -14,7 +25,15 @@ private:
 	Animation* m_topMove;
 	Animation* m_downMove;
 	Animation* m_idle;
+	Animation* m_bidle;
+	Animation* m_bleftMove;
+	Animation* m_bAttack;
+	Animation* m_bLAttack;
+	Animation* m_bJump;
 	Camera*    m_camera;
+	STATE	   m_state = STATE::NONE_STATE;
+	char       m_bfilePath [256];
+	JUMP	   m_jumpState = JUMP_NONE;
 public:
 	Player() : GameObject(PlayerObj) {};
 	virtual ~Player() {};
@@ -23,13 +42,21 @@ public:
 	void SetTopMove(Animation* _ani) { m_topMove = _ani; };
 	void SetDownMove(Animation* _ani) { m_downMove = _ani; };
 	void SetIdle(Animation* _ani);
+	void SetBIdle(Animation* _ani);
+	void SetBleft(Animation* _ani);
+	void SetBAttack(Animation* _ani);
+	void SetBLAttack(Animation* _ani);
+	void SetBJump(Animation* _ani) { m_bJump = _ani; }
+
 	void Update(class Map* _map, std::list<Map*>& _maplist);
 	void Render(class GameWnd* _wnd);
 	void KeyUpBind(WPARAM _wparam);
 	void KeyDownBind(WPARAM _param);
 	void SetSceenState(SCEEN_STATE _state) { m_sceen_state = _state; }
+	SCEEN_STATE GetSceenState() { return m_sceen_state; }
 	void BattleUpdate(Map* _map, std::list<Map*>& _maplist);
 	void OverWorldUpdate(Map* _map, std::list<Map*>& _maplist);
 	void SetCamera(Camera* _camera) { m_camera = _camera; };
+	void SetBFilePath(const char* _bifilePath) { strcpy_s(m_bfilePath, _bifilePath); }
 };
 

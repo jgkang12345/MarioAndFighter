@@ -43,10 +43,18 @@ void GameSceen::Init(GameWnd* _wnd)
 {
 	m_player = new Player();
 	m_player->SetFilePath("overworld_mario.png");
+	m_player->SetBFilePath("battleMario.png");
 	m_player->SetLeftMove(reinterpret_cast<Animation*>(ResourceManger::LoadBinaryData("playerLeftMove2.spr")));
 	m_player->SetDownMove(reinterpret_cast<Animation*>(ResourceManger::LoadBinaryData("playerDownMove.spr")));
 	m_player->SetTopMove(reinterpret_cast<Animation*>(ResourceManger::LoadBinaryData("playerUpMove.spr")));
 	m_player->SetIdle(reinterpret_cast<Animation*>(ResourceManger::LoadBinaryData("playerIdle.spr")));
+
+	m_player->SetBAttack(reinterpret_cast<Animation*>(ResourceManger::LoadBinaryData("playerBattleAttack.spr")));
+	m_player->SetBIdle(reinterpret_cast<Animation*>(ResourceManger::LoadBinaryData("playerBattleIdel.spr")));
+	m_player->SetBleft(reinterpret_cast<Animation*>(ResourceManger::LoadBinaryData("playerBattleMove.spr")));
+	m_player->SetBLAttack(reinterpret_cast<Animation*>(ResourceManger::LoadBinaryData("playerBattleLAttack.spr")));
+	m_player->SetBJump(reinterpret_cast<Animation*>(ResourceManger::LoadBinaryData("playerBattleJump.spr")));
+	
 	ResourceManger::GetBitmap(m_player->GetFilePath(), _wnd->GetRRT());
 	const char* aa[mapCount] = { "stage1.map", "battle1.map", "stage2.map"};
 	for (int i = 0; i < mapCount; i++) 
