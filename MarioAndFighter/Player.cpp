@@ -13,6 +13,7 @@
 #include "SceenManager.h"
 #include "Camera.h"
 #include "Monster.h"
+#include "Missile.h"
 void Player::SetIdle(Animation* _ani)
 {
 	m_idle = _ani; 
@@ -139,6 +140,16 @@ void Player::Render(GameWnd* _wnd)
 			frame = m_bLAttack->GetFrameUnique();
 			if (m_bLAttack->GetFrameCount() == m_bLAttack->GetIndex())
 			{
+				const int height = frame->GetRect().bottom - frame->GetRect().top;
+				Missile* missile = new Missile();
+				missile->SetPos( { m_pos.x, (m_pos.y + (m_pos.y - height)) / 2 });
+				if (isRotate)
+					missile->SetHPower(-5);
+				else
+					missile->SetHPower(5);
+				Animation* missileAnimation = reinterpret_cast<Animation*>(ResourceManger::LoadBinaryData("missile.spr"));
+				missile->SetMissileAnimation(missileAnimation);
+				m_missiles.push_back(missile);
 				m_bLAttack->Init();
 				m_state = STATE::NONE_STATE;
 			}
@@ -209,14 +220,14 @@ void Player::KeyDownBind(WPARAM _param)
 		break;
 
 	case 65:
-		if (m_state == STATE::ATTACK_ING)
+		if (m_sceen_state == OVER_WORLD || m_state == STATE::ATTACK_ING)
 			break;
 		if (m_state == STATE::NONE_STATE)
 			m_state = STATE::ATTACK;
 		break;
 
 	case 83:
-		if (m_state == STATE::LATTACK_ING)
+		if (m_sceen_state == OVER_WORLD || m_state == STATE::LATTACK_ING)
 			break;
 		if (m_state == STATE::NONE_STATE)
 			m_state = STATE::LATTACK;
@@ -318,6 +329,21 @@ void Player::BattleUpdate(Map* _map, std::list<Map*>& _maplist)
 		m_vPower = 0;
 		m_hPower = 0;
 	}
+
+	for (auto it = begin(m_missiles); it != end(m_missiles);)
+	{
+		if ((*it)->IsDead())
+		{
+			delete *it;
+			it = m_missiles.erase(it);
+		}
+		else
+		{
+			(*it)->Update(_map,_maplist);
+			it++;
+		}
+	}
+		
 
 	if (mapIsNext && _maplist.size() != 1)
 	{

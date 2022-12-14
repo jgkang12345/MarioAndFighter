@@ -53,7 +53,7 @@ void Camera::Update(Player* _player, Map* _map)
 		break;
 
 	case BATTLE:
-		D2D1_RECT_F cameraZone = { 0, 0, 239, 200 };
+		D2D1_RECT_F cameraZone = { 0, 0, 239, 159 };
 		m_cameraRect = cameraZone;
 		break;
 	}

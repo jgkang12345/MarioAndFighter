@@ -11,7 +11,8 @@ enum ObjectType : int
 	PlayerObj = 100,
 	NefendesObj = 200,
 	GhostObj = 300,
-	KumaObj = 400
+	KumaObj = 400,
+	LWeapon = 500
 };
 
 enum Dir : int

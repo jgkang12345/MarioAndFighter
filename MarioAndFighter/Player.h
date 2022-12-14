@@ -3,10 +3,11 @@
 #include <Windows.h>
 #include "Type.h"
 #include <list>
+#include <vector>
 class Sprite;
 class Animation;
 class Camera;
-
+class Missile;
 enum JUMP
 {
 	JUMP_UP,
@@ -34,6 +35,7 @@ private:
 	STATE	   m_state = STATE::NONE_STATE;
 	char       m_bfilePath [256];
 	JUMP	   m_jumpState = JUMP_NONE;
+	std::vector<Missile*> m_missiles;
 public:
 	Player() : GameObject(PlayerObj) {};
 	virtual ~Player() {};
@@ -58,5 +60,7 @@ public:
 	void OverWorldUpdate(Map* _map, std::list<Map*>& _maplist);
 	void SetCamera(Camera* _camera) { m_camera = _camera; };
 	void SetBFilePath(const char* _bifilePath) { strcpy_s(m_bfilePath, _bifilePath); }
+	std::vector<Missile*>& GetMissiles() { return m_missiles; }
+	char* GetBFilePath() { return m_bfilePath; }
 };
 

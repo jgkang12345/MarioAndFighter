@@ -13,6 +13,7 @@
 #include "SceenManager.h"
 #include <algorithm>
 #include "GameObject.h"
+#include "Missile.h"
 Map::Map(const char* _mapFilePath, Player* _player, GameWnd* _wnd)
 {
 	FILE* p_file = NULL;
@@ -95,6 +96,7 @@ void Map::Render(GameWnd* _wnd, Player* _player)
 	std::vector<GameObject*> objects;
 	objects.push_back(m_monster);
 	objects.push_back(_player);
+	objects.insert(std::end(objects), _player->GetMissiles().begin(), _player->GetMissiles().end());
 	sort(objects.begin(), objects.end(), [](GameObject* _left, GameObject* _right) 
 		{ 
 		if (_left->GetPos().y != _right->GetPos().y) 
@@ -107,6 +109,8 @@ void Map::Render(GameWnd* _wnd, Player* _player)
 	{
 		if (item->GetObjectType() == PlayerObj)
 			reinterpret_cast<Player*>(item)->Render(_wnd);
+		else if (item->GetObjectType() == LWeapon)
+			reinterpret_cast<Missile*>(item)->Render(_wnd,_player);
 		else
 			reinterpret_cast<Monster*>(item)->Render(_wnd);
 	}
