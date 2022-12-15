@@ -9,6 +9,8 @@ private:
 	Animation* m_topMove;
 	Animation* m_downMove;
 	Animation* m_idle;
+	D2D1_RECT_F m_dest;
+	bool        m_isDamaged;
 public:
 	Monster(ObjectType _type, class GameWnd* _wnd) : GameObject(_type) { Init(_wnd); };
 	virtual ~Monster();
@@ -26,5 +28,6 @@ public:
 	SCEEN_STATE GetSceenState() { return m_sceen_state; }
 	void BattleUpdate(Map* _map, class Player*);
 	void OverWorldUpdate(Map* _map, class Player*);
+	bool IsCrash(const D2D1_RECT_F& _rect);
 };
 

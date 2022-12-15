@@ -9,6 +9,7 @@ protected:
 	int		   m_hPower = 0;
 	int		   m_vPower = 0;
 	char	   m_filePath [256];
+	D2D1_RECT_F m_dest = { 0, 0, 0, 0 };
 public:
 	GameObject(ObjectType _type) : m_objType(_type) {};
 	virtual ~GameObject() {};

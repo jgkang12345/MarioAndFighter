@@ -22,6 +22,9 @@ class Player : public GameObject
 {
 private:
 	SCEEN_STATE m_sceen_state;
+
+	//Animation* m_animationList[9];
+
 	Animation* m_leftMove;
 	Animation* m_topMove;
 	Animation* m_downMove;
@@ -51,7 +54,7 @@ public:
 	void SetBJump(Animation* _ani) { m_bJump = _ani; }
 
 	void Update(class Map* _map, std::list<Map*>& _maplist);
-	void Render(class GameWnd* _wnd);
+	void Render(Map* _map, class GameWnd* _wnd);
 	void KeyUpBind(WPARAM _wparam);
 	void KeyDownBind(WPARAM _param);
 	void SetSceenState(SCEEN_STATE _state) { m_sceen_state = _state; }
@@ -62,5 +65,6 @@ public:
 	void SetBFilePath(const char* _bifilePath) { strcpy_s(m_bfilePath, _bifilePath); }
 	std::vector<Missile*>& GetMissiles() { return m_missiles; }
 	char* GetBFilePath() { return m_bfilePath; }
+	bool IsCrash(const D2D1_RECT_F& rect);
 };
 

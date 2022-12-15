@@ -94,18 +94,33 @@ void Monster::Render(GameWnd* _wnd)
 
 	const int width = abs((int)(frame->GetRect().left - frame->GetPivot().x));
 	const int height = abs((int)(frame->GetRect().top - frame->GetPivot().y));
+	FLOAT opacity = m_isDamaged ? 0.5f : 1.0f;
 	D2D1_RECT_F dest = { m_pos.x - width, m_pos.y - height, m_pos.x + width, m_pos.y };
+	m_dest = dest;
 	if (isRotate)
 		_wnd->GetBRT()->SetTransform(D2D1::Matrix3x2F::Scale(-1.0, 1.0, D2D1::Point2F(m_pos.x, m_pos.x)));
-	_wnd->GetBRT()->DrawBitmap(ResourceManger::GetBitmap(m_filePath, _wnd->GetRRT())->GetBitmap(), dest, 1.0f, D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, frame->GetRect());
+	_wnd->GetBRT()->DrawBitmap(ResourceManger::GetBitmap(m_filePath, _wnd->GetRRT())->GetBitmap(), dest, opacity, D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, frame->GetRect());
 	if (isRotate)
 		_wnd->GetBRT()->SetTransform(D2D1::Matrix3x2F::Identity());
+	m_isDamaged = false;
 }
 
 void Monster::BattleUpdate(Map* _map, Player* _player)
 {
+
 }
 
 void Monster::OverWorldUpdate(Map* _map, Player* _player)
 {
+}
+
+bool Monster::IsCrash(const D2D1_RECT_F& _rect)
+{
+	if (m_dest.left > _rect.right || m_dest.right < _rect.left || m_dest.top > _rect.bottom || m_dest.bottom < _rect.top)
+		return false;
+	else
+	{
+		m_isDamaged = true;
+		return true;
+	}
 }

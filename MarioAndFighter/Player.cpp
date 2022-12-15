@@ -49,7 +49,7 @@ void Player::Update(Map* _map, std::list<Map*>& _maplist)
 	}
 }
 
-void Player::Render(GameWnd* _wnd)
+void Player::Render(Map* _map, GameWnd* _wnd)
 {
 	Sprite* frame = nullptr;
 	bool isRotate = false;
@@ -127,6 +127,8 @@ void Player::Render(GameWnd* _wnd)
 			frame = m_bAttack->GetFrameUnique();
 			if (m_bAttack->GetFrameCount() == m_bAttack->GetIndex()) 
 			{
+				_map->GetMonster()->IsCrash(m_dest);
+					
 				m_bAttack->Init();
 				m_state = STATE::NONE_STATE;
 			}
@@ -162,6 +164,7 @@ void Player::Render(GameWnd* _wnd)
 	const int width = abs((int)(frame->GetRect().left - frame->GetPivot().x));
 	const int height = abs((int)(frame->GetRect().top - frame->GetPivot().y));
 	D2D1_RECT_F dest = { m_pos.x - width, m_pos.y - height, m_pos.x + width, m_pos.y };
+	m_dest = dest;
 	if (isRotate)
 		_wnd->GetBRT()->SetTransform(D2D1::Matrix3x2F::Scale(-1.0, 1.0, D2D1::Point2F(m_pos.x, m_pos.x)));
 	_wnd->GetBRT()->DrawBitmap(ResourceManger::GetBitmap(bitmapPath, _wnd->GetRRT())->GetBitmap(), dest, 1.0f, D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, frame->GetRect());
@@ -343,7 +346,6 @@ void Player::BattleUpdate(Map* _map, std::list<Map*>& _maplist)
 			it++;
 		}
 	}
-		
 
 	if (mapIsNext && _maplist.size() != 1)
 	{
@@ -458,4 +460,12 @@ void Player::OverWorldUpdate(Map* _map, std::list<Map*>& _maplist)
 		}
 		m_dir = Dir::NONE;			
 	}
+}
+
+bool Player::IsCrash(const D2D1_RECT_F& rect)
+{	
+	if (m_dest.left > rect.left || m_dest.right < rect.right || m_dest.top > rect.top || m_dest.bottom < rect.bottom)
+		return false;
+	else
+		return true;
 }

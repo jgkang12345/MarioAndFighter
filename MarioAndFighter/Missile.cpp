@@ -7,6 +7,7 @@
 #include "Bitmap.h"
 #include "Map.h"
 #include <list>
+#include "Monster.h"
 Missile::~Missile()
 {
 	if (m_missile)
@@ -27,24 +28,22 @@ void Missile::Update(Map* _map, std::list<Map*>& _maplist)
 	case PlayerType:
 		break;
 	case NefendesType:
-		m_isDead = true;
 		break;
 	case GhostType:
-		m_isDead = true;
 		break;
 	case KumaType:
-		m_isDead = true;
 		break;
 	case NefendesRect:
-		m_isDead = true;
 		break;
 	case GhostRect:
-		m_isDead = true;
 		break;
 	default:
 		break;
 	}
 
+	Monster* m = _map->GetMonster();
+	if (m->IsCrash(m_dest))
+		m_isDead = true;
 }
 
 void Missile::Render(GameWnd* _wnd, Player* player)
@@ -53,5 +52,6 @@ void Missile::Render(GameWnd* _wnd, Player* player)
 	const int width = abs((int)(sprite->GetRect().left - sprite->GetPivot().x));
 	const int height = abs((int)(sprite->GetRect().top - sprite->GetPivot().y));
 	D2D1_RECT_F dest = { m_pos.x - width, m_pos.y - height, m_pos.x + width, m_pos.y };
+	m_dest = dest;
 	_wnd->GetBRT()->DrawBitmap(ResourceManger::GetBitmap(player->GetBFilePath(), _wnd->GetRRT())->GetBitmap(), dest, 1.0f, D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, sprite->GetRect());
 }

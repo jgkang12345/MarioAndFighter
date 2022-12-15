@@ -108,7 +108,7 @@ void Map::Render(GameWnd* _wnd, Player* _player)
 	for (auto& item : objects) 
 	{
 		if (item->GetObjectType() == PlayerObj)
-			reinterpret_cast<Player*>(item)->Render(_wnd);
+			reinterpret_cast<Player*>(item)->Render(this,_wnd);
 		else if (item->GetObjectType() == LWeapon)
 			reinterpret_cast<Missile*>(item)->Render(_wnd,_player);
 		else

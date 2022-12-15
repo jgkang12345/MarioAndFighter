@@ -65,11 +65,13 @@
     <ClCompile Include="Camera.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Monster.cpp" />
     <ClCompile Include="LoadingSceen.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="Missile.cpp">
+      <Filter>GameObj</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster.cpp">
       <Filter>GameObj</Filter>
     </ClCompile>
   </ItemGroup>
@@ -129,11 +131,13 @@
     <ClInclude Include="Camera.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Monster.h" />
     <ClInclude Include="LoadingSceen.h">
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="Missile.h">
+      <Filter>GameObj</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster.h">
       <Filter>GameObj</Filter>
     </ClInclude>
   </ItemGroup>
