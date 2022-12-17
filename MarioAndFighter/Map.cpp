@@ -14,6 +14,8 @@
 #include <algorithm>
 #include "GameObject.h"
 #include "Missile.h"
+#include "Monster.h"
+#include "MissileMonster.h"
 Map::Map(const char* _mapFilePath, Player* _player, GameWnd* _wnd)
 {
 	FILE* p_file = NULL;
@@ -97,12 +99,13 @@ void Map::Render(GameWnd* _wnd, Player* _player)
 	objects.push_back(m_monster);
 	objects.push_back(_player);
 	objects.insert(std::end(objects), _player->GetMissiles().begin(), _player->GetMissiles().end());
-	sort(objects.begin(), objects.end(), [](GameObject* _left, GameObject* _right) 
-		{ 
-		if (_left->GetPos().y != _right->GetPos().y) 
-			return _left->GetPos().y < _right->GetPos().y; 
-		else 
-			return _left->GetPos().x < _right->GetPos().x; 
+	objects.insert(std::end(objects), m_monster->GetMissiles().begin(), m_monster->GetMissiles().end());
+	sort(objects.begin(), objects.end(), [](GameObject* _left, GameObject* _right)
+		{
+			if (_left->GetPos().y != _right->GetPos().y)
+				return _left->GetPos().y < _right->GetPos().y;
+			else
+				return _left->GetPos().x < _right->GetPos().x;
 		}
 	);
 	for (auto& item : objects) 
@@ -111,6 +114,8 @@ void Map::Render(GameWnd* _wnd, Player* _player)
 			reinterpret_cast<Player*>(item)->Render(this,_wnd);
 		else if (item->GetObjectType() == LWeapon)
 			reinterpret_cast<Missile*>(item)->Render(_wnd,_player);
+		else if (item->GetObjectType() == MonsterLWeapon)
+			reinterpret_cast<MissileMonster*>(item)->Render(_wnd, _player);
 		else
 			reinterpret_cast<Monster*>(item)->Render(_wnd);
 	}

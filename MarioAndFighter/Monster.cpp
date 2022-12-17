@@ -5,6 +5,7 @@
 #include "Animation.h"
 #include "Sprite.h"
 #include "Bitmap.h"
+#include "MissileMonster.h"
 Monster::~Monster()
 {
 	if (m_leftMove)
@@ -89,6 +90,19 @@ void Monster::Render(GameWnd* _wnd)
 		break;
 	case NONE:
 		frame = m_idle->GetFrame();
+		if (m_idle->GetIndex() == 11)
+		{
+			const int height = frame->GetRect().bottom - frame->GetRect().top;
+			MissileMonster* missile = new MissileMonster();
+			missile->SetPos({ m_pos.x, (m_pos.y + (m_pos.y - height)) / 2 });
+			if (isRotate)
+				missile->SetHPower(5);
+			else
+				missile->SetHPower(-5);
+			Animation* missileAnimation = reinterpret_cast<Animation*>(ResourceManger::LoadBinaryData("missile.spr"));
+			missile->SetMissileAnimation(missileAnimation);
+			m_missiles.push_back(missile);
+		}
 		break;
 	}
 
@@ -107,7 +121,19 @@ void Monster::Render(GameWnd* _wnd)
 
 void Monster::BattleUpdate(Map* _map, Player* _player)
 {
-
+	for (auto it = begin(m_missiles); it != end(m_missiles);)
+	{
+		if ((*it)->IsDead())
+		{
+			delete* it;
+			it = m_missiles.erase(it);
+		}
+		else
+		{
+			(*it)->Update(_map, _player);
+			it++;
+		}
+	}
 }
 
 void Monster::OverWorldUpdate(Map* _map, Player* _player)

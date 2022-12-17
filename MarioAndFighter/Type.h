@@ -12,7 +12,8 @@ enum ObjectType : int
 	NefendesObj = 200,
 	GhostObj = 300,
 	KumaObj = 400,
-	LWeapon = 500
+	LWeapon = 500,
+	MonsterLWeapon = 600
 };
 
 enum Dir : int
@@ -110,5 +111,5 @@ enum SCEEN
 #define powerY 2
 
 #define mapCount 3
-#define jumpMax 30
+#define jumpMax 40
 #define jumpPower 3

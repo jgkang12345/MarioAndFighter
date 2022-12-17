@@ -1,6 +1,14 @@
 #pragma once
 #include "GameObject.h"
+#include <vector>
+class Missile;
 class Animation;
+class MissileMonster;
+enum MONSTER_STATE 
+{
+	MONSTER_ATTACK = 0,
+	MONSTER_IDLE = 1
+};
 class Monster : public GameObject
 {
 private:
@@ -11,6 +19,8 @@ private:
 	Animation* m_idle;
 	D2D1_RECT_F m_dest;
 	bool        m_isDamaged;
+	MONSTER_STATE m_monsterState = MONSTER_IDLE;
+	std::vector<MissileMonster*> m_missiles;
 public:
 	Monster(ObjectType _type, class GameWnd* _wnd) : GameObject(_type) { Init(_wnd); };
 	virtual ~Monster();
@@ -29,5 +39,6 @@ public:
 	void BattleUpdate(Map* _map, class Player*);
 	void OverWorldUpdate(Map* _map, class Player*);
 	bool IsCrash(const D2D1_RECT_F& _rect);
+	std::vector<MissileMonster*>& GetMissiles() { return m_missiles; }
 };
 

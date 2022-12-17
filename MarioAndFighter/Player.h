@@ -38,6 +38,7 @@ private:
 	STATE	   m_state = STATE::NONE_STATE;
 	char       m_bfilePath [256];
 	JUMP	   m_jumpState = JUMP_NONE;
+	bool	m_isDamaged = false;
 	std::vector<Missile*> m_missiles;
 public:
 	Player() : GameObject(PlayerObj) {};

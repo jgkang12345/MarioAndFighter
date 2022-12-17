@@ -74,6 +74,9 @@
     <ClCompile Include="Monster.cpp">
       <Filter>GameObj</Filter>
     </ClCompile>
+    <ClCompile Include="MissileMonster.cpp">
+      <Filter>GameObj</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MarioAndFighterApp.h" />
@@ -138,6 +141,9 @@
       <Filter>GameObj</Filter>
     </ClInclude>
     <ClInclude Include="Monster.h">
+      <Filter>GameObj</Filter>
+    </ClInclude>
+    <ClInclude Include="MissileMonster.h">
       <Filter>GameObj</Filter>
     </ClInclude>
   </ItemGroup>
